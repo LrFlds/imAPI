@@ -1,0 +1,12 @@
+import { ClientController } from "../controllers/clientController";
+
+
+
+export class RouteClient {
+    public baseUrl: string = "/client";
+    public clientController : ClientController = new ClientController();
+    public clientRoutes(app): void {
+        app.route(this.baseUrl + "/create").post(this.clientController.createClient);
+        app.route(this.baseUrl + "/getAll").get(this.clientController.getAllClient);
+    }
+}
