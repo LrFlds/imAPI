@@ -38,7 +38,22 @@ export class StoreManager {
             }
         
 
-
+            public  deleteStore(req,res){
+                const Stores = storeModel.findOne({ Email: req.body.Email })
+                if (Stores == null) {
+                    res.status(400).send({ message: 'client déjà supprimé' })
+                }else {
+                   
+                    Stores.remove((err,Stores)=>{
+                        if(err){
+                            res.send(err)
+                        }else{
+                            res.sendStatus(200)
+                        }
+                    })
+                }
+              }
+                
 
 
 }

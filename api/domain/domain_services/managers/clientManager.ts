@@ -63,9 +63,75 @@ export class ClientManager {
 
 
 
+          public  deleteClient(req,res){
+            const Clients = clientModel.findOne({ Email: req.body.Email })
+            if (Clients == null) {
+                res.status(400).send({ message: 'client déjà supprimé' })
+            }else {
+               
+                Clients.remove((err,Clients)=>{
+                    if(err){
+                        res.send(err)
+                    }else{
+                        res.sendStatus(200)
+                    }
+                })
+            }
+          }
+        
+
+        //   public async updateClient(req:Request,res:Response){
+
+        //     const Clients = await clientModel.find({})
+
+        //         Clients.find({Email: req.body.Email}).then( async (Clients) => {
+        //             if(req.body.Password != null && req.body.NewPassword && req.body.Password !="" && req.body.Password != req.body.NewPassword){
+        //                 await CryptPassword.compare(req.body.Password, Clients.Password, (err, match) => {
+        //                     if(err){
+        //                         res.send('Mot depasse éronné')
+        //                     }else{
+        //                         Clients.updateOne({Password: req.body.NewPassword}).then().catch(error => {
+        //                             console.log(error)
+        //                         })
+        //                     }
+        //                 })
+        //             }
+        //             if (req.body.Email != null && req.body.NewEmail != null && req.body.Email != req.body.NewEmail && req.body.NewEmail != ""){
+        //                 await CryptPassword.compare(req.body.Password, Clients.Password, (err, match) => {
+        //                     if (err) {
+        //                         console.log(err)
+        //                     } else {
+        //                         Clients.updateOne({ Email: req.body.NewMail }).then().catch(error => {
+        //                             console.log(error)
+        //                         })
+        //                     }
+        //                 })
+        //             }
+        //             if(req.body.Name != null && req.body.NewName != null && req.body.Name != req.body.NewName && req.body.NewName != ""){
+        //                 Clients.updateOne({ Name: req.body.NewName }).then().catch(error => {
+        //                     console.log(error)
+        //                 })
+        //             }
+        //             if(req.body.FirstName != null && req.body.NewFirstName != null && req.body.FirstName != req.body.NewFirstName && req.body.NewFirstName != ""){
+        //                 Clients.updateOne({ FirstName: req.body.NewFirstName }).then().catch(error => {
+        //                     console.log(error)
+        //                 })
+        //             }
+        //         })
+        //     }
+
+        // }
+        // if(req.body.Panier != null && req.body.NewPanier != null && req.body.Panier != req.body.NewPanier && req.body.NewPanier != ""){
+        //     Clients.updateOne({ Panier: req.body.NewPanier }).then().catch(error => {
+        //         console.log(error)
+        //     })
+        
+    
+            
+        }
 
 
 
 
 
-    }
+    
