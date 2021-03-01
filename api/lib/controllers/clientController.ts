@@ -12,4 +12,9 @@ export class ClientController {
         const clientManager : ClientManager = new ClientManager();
         clientManager.getAllClient(req,res);
     }
+
+    public login(req: Request, res: Response) {
+        const clientManager : ClientManager = new ClientManager();
+        clientManager.login(req,res);
+    }
 }

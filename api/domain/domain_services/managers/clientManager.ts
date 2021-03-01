@@ -9,12 +9,17 @@
 import clientModel from "../Models/clientModel";
 import { DbConnection } from "../../Data/dbConnection";
 import { CryptPassword } from "../schema_services/cryptPassword";
-
+import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
 
 export class ClientManager {
 
     private instance = DbConnection.getInstance();
     private connection = this.instance.connectMongo();
+
+    /*
+     * Creation new client
+    */
 
     public async createClient(req,res) {
         const clientExist = await clientModel.findOne({Email:req.body.Email})
@@ -45,6 +50,10 @@ export class ClientManager {
             }
         }
 
+        /*
+        * Get all clients in array
+        */
+
         public async getAllClient(req, res) {
             const Clients = await clientModel.find({})
             const viewClients = []
@@ -61,6 +70,43 @@ export class ClientManager {
             res.status(200).send(viewClients)
           }
 
+          /**
+           * Login client
+           */
+
+          public async login(req, res) {
+            if (req.body.Email) {
+                const clientByEmail = await clientModel.findOne({Email: req.body.Email});
+                if (clientByEmail != undefined) {
+                  if (req.body.Password) {
+                    await bcrypt.compare(req.body.Password, clientByEmail.Password, (err, same) => {
+                      if (err) {
+                        res.status(500).send({ message: "Une erreur est survenue, veuillez vérifier que tous les champs sont correctement remplis. Si l'erreur persiste, veuillez contacter votre administrateur" });
+                      }else if (same) {
+                        clientByEmail.save((err, user) => {
+                          if (err) {
+                            res.status(500).send("Une erreur est survenue lors de la connexion");
+                          } else {
+                            const token = jwt.sign(clientByEmail._id.toJSON(), process.env.SECRET_TOKEN_ACCESS);
+                            res.status(200).send({ accessToken: token });
+                          }
+                        })
+                      } else {
+                        res.status(400).send({ message: "La comparaison de mot de passe a échoué, êtes vous sûr d'avoir rentré le bon ?" });
+                      }
+                    })
+                  } else {
+                    res.status(400).send({ message: "Veuillez entrer un mot de passe" });
+                  }
+                } else {
+                  res.status(401).send({ message: "Pas d'utilisateur connu avec cette adresse mail" });
+                }
+              }
+            }
+
+          /**
+           * check tokens for client
+           */
 
 
 
