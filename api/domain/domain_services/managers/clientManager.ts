@@ -112,14 +112,13 @@ export class ClientManager {
           public  deleteClient(req,res){
             const Clients = clientModel.findOne({ Email: req.body.Email })
             if (Clients == null) {
-                res.status(400).send({ message: 'client déjà supprimé' })
+                res.status(400).send({ message: "L'utilisateur n'existe pas" })
             }else {
-               
-                Clients.remove((err,Clients)=>{
+                Clients.deleteOne((err, Clients)=>{
                     if(err){
                         res.send(err)
                     }else{
-                        res.sendStatus(200)
+                        res.status(200).send('Utilisateur supprimé avec succés')
                     }
                 })
             }

@@ -1,1 +1,22 @@
-je suis la branche develo^p
+creation client : POST : localhost:3000/client/create 
+{
+    "Name": "Laura",
+    "FirstName": "Fialdes",
+    "Email": "laura.fialdes@gmail.com",
+    "Password":"Laura080690!" ,
+    "Panier": []
+}
+
+login : POST: localhost:3000/client/login
+{
+    "Email": "laura.fialdes@gmail.com",
+    "Password":"Laura080690!" 
+}
+
+getAllClient : GET : localhost:3000/client/getAll
+
+Delete : POST : localhost:3000/client/delete
+{
+    "Email":"monadressemail@gmail.com"
+}
+
