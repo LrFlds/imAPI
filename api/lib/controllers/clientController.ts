@@ -17,4 +17,14 @@ export class ClientController {
         const clientManager : ClientManager = new ClientManager();
         clientManager.login(req,res);
     }
+
+    public deleteClient(req: Request, res: Response) {
+        const clientManager : ClientManager = new ClientManager();
+        clientManager.deleteClient(req,res);
+    }
+
+    public updateClient(req: Request, res: Response) {
+        const clientManager : ClientManager = new ClientManager();
+        clientManager.updateClient(req,res);
+    }
 }
