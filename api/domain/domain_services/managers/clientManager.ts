@@ -6,7 +6,7 @@
 
 
 
-import clientModel from "../Models/clientModel";
+import clientModel from "../models/clientModel";
 import { DbConnection } from "../../Data/dbConnection";
 import { CryptPassword } from "../schema_services/cryptPassword";
 import * as bcrypt from "bcrypt";
@@ -104,17 +104,14 @@ export class ClientManager {
               }
             }
 
-          /**
-           * check tokens for client
-           */
 
 
           public  deleteClient(req,res){
-            const Clients = clientModel.findOne({ Email: req.body.Email })
-            if (Clients == null) {
+            const Client = clientModel.findOne({ Email: req.body.Email })
+            if (Client == null) {
                 res.status(400).send({ message: "L'utilisateur n'existe pas" })
             }else {
-                Clients.deleteOne((err, Clients)=>{
+                Client.deleteOne((err, Clients)=>{
                     if(err){
                         res.send(err)
                     }else{
@@ -123,49 +120,64 @@ export class ClientManager {
                 })
             }
           }
+
+          async verifToken(req, res, next) {
+            const headerAuth = await req.header('Authorization');
+            const token = await headerAuth && headerAuth.split(' ')[1]
+            console.log(token)
+            if (token == undefined || token == '' || token == null) {
+              res.status(401).send({ message: 'Une authentification est nécessaire' })
+            } else {
+              jwt.verify(token, process.env.SECRET_TOKEN_ACCESS, async (err, user) => {
+                if (err) {
+                  res.status(500).send({ message: "Une erreur est survenue, veuillez réessayer ultérieurement. Si l'erreur persiste, veuillez contacter votre administrateur" });
+                } else {
+                  const connectedUser = await clientModel.findById(user)
+                  req.user = connectedUser;
+                  next();
+                }
+              })
+            }
+          }
+
+          public async updateClientPassword(req, res){
+            const client = await clientModel.findById(req.user._id)
+            console.log("je vais niquer ta mère")
+            if (req.body.NewPass != null && req.body.NewPass != undefined) {
+                if (req.body.Password != null && req.body.NewPass != req.body.Password) {
+                    await bcrypt.compare(req.body.Password, client.Password, async (err, same) => {
+                      if (err) {
+                        res.status(500).send({ message: "Une erreur est survenue lors de la vérification de votre mot de passe" })
+                      } else if (!same) {
+                        res.status(400).send({ message: "Une erreur est survenue lors de la comparaison des mots de passe. Avez vous bien entré votre mot de passe actuel?" })
+                      } else {
+                        if (req.body.NewPass) {
+                          const salt = await bcrypt.genSalt(10);
+                          const hash = await bcrypt.hash(req.body.NewPass, salt);
+                          await client.set("Password", hash)
+                          client.save((err, user) => {
+                            if (err) {
+                              res.status(500).send({ message: 'Une erreur est survenue lors de la mise à jour.' })
+                            } else {
+                              res.status(200).send({ message: "Votre mot de passe a bien été mis à jour" })
+                            }
+                          })
+                        } else {
+                          res.status(400).send({ message: 'Le mot de passe doit contenir 8 charactères, une majuscule, un chiffre et un caractère spécial' })
+                        }
+                      }
+                    })
+                  } else {
+                    res.status(400).send({ message: "Veuillez entrer votre mot de passe actuel" })
+                  }
+                } else {
+                  res.status(400).send({ message: "Un nouveau mot de passe est requis pour la mise à jour!" })
+                }
+          
+          }
         
 
-          public async updateClient(req,res){
 
-            const Clients = await clientModel.findById(req.params.id)
-                    if(req.body.Password != null && req.body.NewPassword && req.body.Password !="" && req.body.Password != req.body.NewPassword){
-                        await bcrypt.compare(req.body.Password, Clients.Password, (err, match) => {
-                            if(err){
-                                res.send('Mot depasse éronné')
-                            }else{
-                                Clients.updateOne({Password: req.body.NewPassword}).then().catch(error => {
-                                    console.log(error)
-                                })
-                            }
-                        })
-                    }
-                    if (req.body.Email != null && req.body.NewEmail != null && req.body.Email != req.body.NewEmail && req.body.NewEmail != ""){
-                        await bcrypt.compare(req.body.Password, Clients.Password, (err, match) => {
-                            if (err) {
-                                console.log(err)
-                            } else {
-                                Clients.updateOne({ Email: req.body.NewMail }).then().catch(error => {
-                                    console.log(error)
-                                })
-                            }
-                        })
-                    }
-                    if(req.body.Name != null && req.body.NewName != null && req.body.Name != req.body.NewName && req.body.NewName != ""){
-                        Clients.updateOne({ Name: req.body.NewName }).then().catch(error => {
-                            console.log(error)
-                        })
-                    }
-                    if(req.body.FirstName != null && req.body.NewFirstName != null && req.body.FirstName != req.body.NewFirstName && req.body.NewFirstName != ""){
-                        Clients.updateOne({ FirstName: req.body.NewFirstName }).then().catch(error => {
-                            console.log(error)
-                        })
-                    }
-                    if(req.body.Panier != null && req.body.NewPanier != null && req.body.Panier != req.body.NewPanier && req.body.NewPanier != ""){
-                        Clients.updateOne({ Panier: req.body.NewPanier }).then().catch(error => {
-                            console.log(error)
-                        })
-                }
-            }
 
         }
         
