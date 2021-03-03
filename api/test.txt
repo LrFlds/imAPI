@@ -25,6 +25,7 @@ il y a une verification de token avant la fonction, il faut donc d'abord se logu
 Dans la partie Headers de postman, dans "key" il faut taper Authorization et dans la value : 
 "bearer token "
 puis utiliser la route :
+
 localhost:3001/client/update/603dfc015dcd6f1afc135af6 (id de mon compte )
 {
     "Password":"Laura080690!",
