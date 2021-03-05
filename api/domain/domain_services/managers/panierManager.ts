@@ -75,10 +75,41 @@ export class PanierManager {
             })
         }
       }
-        
+ 
 
+      public async updatePanier(req,res){
+
+        const Paniers = panierModel.findOne({ Reference: req.body.Reference })
+               
+                if(req.body.Reference != null && req.body.NewReference != null && req.body.Reference != req.body.Reference && req.body.NewReference != ""){
+                    Paniers.updateOne({ Reference: req.body.NewReference }).then().catch(error => {
+                        console.log(error)
+                    })
+                }
+                if(req.body.Produits != null && req.body.NewProducts != null && req.body.Products != req.body.NewProducts && req.body.NewProducts != ""){
+                    Paniers.updateOne({ Products: req.body.NewProducts }).then().catch(error => {
+                        console.log(error)
+                    })
+                }
+                if(req.body.Price != null && req.body.NewPrice != null && req.body.Price != req.body.Price && req.body.NewPrice != ""){
+                    Paniers.updateOne({ Price: req.body.NewPrice }).then().catch(error => {
+                        console.log(error)
+                    })
+                }
+                if(req.body.Quantity != null && req.body.NewQuantity != null && req.body.Quantity != req.body.NewQuantity && req.body.NewQuantity != ""){
+                   Paniers.updateOne({ Quantity: req.body.NewQuantity }).then().catch(error => {
+                        console.log(error)
+                    })
+            }
+
+            if(req.body.Dispo != null && req.body.NewDispo != null && req.body.Dispo != req.body.Dispo && req.body.NewDispo != ""){
+                Paniers.updateOne({ Dispo: req.body.NewDispo }).then().catch(error => {
+                    console.log(error)
+                })
+            }
+        }
     
-    
+
 
 
 }
