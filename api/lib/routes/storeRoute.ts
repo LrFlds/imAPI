@@ -1,4 +1,4 @@
-import { StoreController } from "../controllers/storeController";
+import { StoreController } from "../../controllers/storeController";
 
 
 

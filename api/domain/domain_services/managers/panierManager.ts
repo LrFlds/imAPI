@@ -66,11 +66,11 @@ export class PanierManager {
             res.status(400).send({ message: 'Panier déjà supprimé' })
         }else {
            
-            Paniers.remove((err,Paniers)=>{
+            Paniers.deleteOne((err,Paniers)=>{
                 if(err){
                     res.send(err)
                 }else{
-                    res.sendStatus(200)
+                    res.status(200).send("Panier supprimé")
                 }
             })
         }
