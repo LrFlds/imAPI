@@ -36,6 +36,25 @@ export class StoreManager {
                 }
                
             }
+
+
+
+            public async  getAllStore(req, res) {
+                const Stores = await storeModel.find({})
+                const viewStores = []
+                for (let store of Stores) {
+                  const viewStore = {
+                    Name: store.Name,
+                    Email: store.Email,
+                    Password: store.Password ,
+                    Panier: store.Panier,
+                    Id: store._id
+                  }
+                  viewStores.push(viewStore)
+                }
+                res.status(200).send(viewStores)
+              }
+        
         
 
             public  deleteStore(req,res){
