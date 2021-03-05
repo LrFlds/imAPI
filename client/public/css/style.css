@@ -677,7 +677,7 @@ a {
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: 91%;
+        height: auto;
     }
 
     .box-article {
@@ -687,6 +687,7 @@ a {
         align-items: center;
         height: 100%;
         width: 100%;
+        padding: 25px 0px 25px 0px;
     }
 
     .offre {
@@ -723,13 +724,24 @@ a {
         width: 20%;
         height: 20%;
         background-color: rgb(0, 127, 136);
-        top: 0;
-        left: 0;
-        border-radius: 10px 0px 10px 0px;
+        bottom: 20%;
+        right: 0;
+        border-radius: 10px 0px 0px 0px;
+        color: white;
     }
 
-    .price h2{
+    .qte {
+        position: absolute;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        width: 20%;
+        height: 20%;
+        background-color: rgb(0, 127, 136);
+        top: 0;
+        left: 0;
         color: white;
+        border-radius: 10px 0px 10px 0px;
     }
 
     .description {
@@ -753,5 +765,130 @@ a {
     .description img {
         width: 40px;
     }
+
+
+    /* summary part /////////////////// */
+
+    .main-container-summary {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        width: 100%;
+        height: 88%;
+    }
+
+    .box-summary {
+        position: relative;
+        width: 70%;
+        height: 95%;
+        margin-top: 20px;
+        border-radius: 5px;
+        background-color: rgb(212, 212, 212);
+    }
+
+    .btn-accept {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgb(0, 127, 136);
+        color: white;
+        width: 150px;
+        height: 50px;
+        border-radius: 5px;
+    }
     
+    .back-arrow-summary {
+        transform: rotate(180deg);
+        padding: 15px;
+        width: 60px;
+        z-index: 1000000;  
+    }
+
+    /* burger-view ///////////////// */
+
+    .main-container-view-offre {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+    }
+
+    .box-quantity {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+        background-color: rgb(24, 24, 24);
+        width: 50%;
+        border-radius: 10px;
+    }
+
+    .quantity {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        
+    }
+
+    .quantity input {
+        width: 20%;
+    }
+
+    .btn-reserved {
+        background-color: rgb(0, 127, 136);
+        color: white;
+        width: 150px;
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    .offre.legume {
+        background-image: none;
+        background-image: url(../img/légumes.jpg);
+    }
+
+    .offre.fish {
+        background-image: none;
+        background-image: url(../img/poisson.jpg);
+    }
+
+
+    /* profil part  /////////////////////////// */
+    .header-profil {
+        height: 250px;
+        background-color: rgb(24, 24, 24);
+        position: relative;
+    }
+
+    .box-content-profil {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .box-content-profil p {
+        padding: 35px;
+    }
+
+    .modified-profil {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 15px;
+    }
+
+    .modified-profil img{
+        width: 15px;
+        height: 15px;
+        margin: 15px;
+    }
 }
