@@ -1,4 +1,4 @@
-import { ClientController } from "../controllers/clientController";
+import { ClientController } from "../../controllers/clientController";
 
 
 
