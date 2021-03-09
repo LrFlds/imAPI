@@ -30,7 +30,7 @@ export class PanierManager {
                 })
                 newPanier.save((err,newPanier)=>{
                     if(err){
-                        res.send(err)
+                        res.status(400).send({message:"le panier n'a pas pu etre sauvegardé "})
                     }else{
                         res.send("Produit créé" + newPanier)
                     }
@@ -73,12 +73,56 @@ export class PanierManager {
                     res.sendStatus(200)
                 }
             })
+
         }
+
       }
         
+      public async updatePanier(req,res){
+          console.log("montre toi batard")
+          if(req.body.Reference != null || req.body.Reference != undefined )// undifined ça veut dire que reference dans le corps de la requette n'existe pas
 
-    
-    
+          {
+              const Panier=  await panierModel.findOne({Reference:req.body.Reference})// indique un element selon les critères et trouve la valeur du critère, la fonction asynchrone me renvoie le resultat de la requete et non la requete     
+          if(Panier== null ){
+           res.status(400).send({ message: 'le panier n existe  pas' }) // le front reçoit du json pour pas avoir de message d'erreur
+       }else {
+           if ( req.body.NumberPanier != 0 && req.body.NumberPanier <= Panier.Quantity ){
+                if(Panier.Quantity == req.body.NumberPanier){
+                        Panier.updateOne({Quantity:(Panier.Quantity-req.body.NumberPanier),Dispo:false},{new:true},(err,newPanier)=>{
+                            if(err){
+                                res.status(400).send({message:"Erreur lors de la mise à jour"})
+                            }else{
+                                res.status(200).send({message:"la mise à jour a bien été effectuée"})
+                            } 
+            
+                        })
 
+                }else{
+                    Panier.updateOne({Quantity:(Panier.Quantity-req.body.NumberPanier)},{new:true},(err,newPanier)=>{
+                        console.log(newPanier)
+                      if(err){
+                            res.status(400).send({message:"erreur lors de la mise à jour"})
+                        }else {
+                            res.status(200).send({message:"Mise à jour effectué avec succès"})
+                        }
+      
+                    })
+
+                }
+               
+           }else{
+            res.status(400).send({message:'la quantité de panier n est pas suffisante'})
+           }
+       } 
+    } else{
+            res.status(400).send({message: 'la reference est null ou indefinie'})
+            console.log("reference null")
+
+    }
+        
+    }
+    
+   
 
 }
