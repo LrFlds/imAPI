@@ -17,8 +17,9 @@ export class PanierController {
         const panierManager : PanierManager = new PanierManager();
         panierManager.deletePanier(req,res);
     }
-    public updatePanier(req:Request,res:Response) {
-        const panierManager:PanierManager = new PanierManager();
-        panierManager.updatePanier(req,res);
-    }
+     public updatePanier(req:Request,res:Response) {
+         const panierManager:PanierManager = new PanierManager();
+         panierManager.updatePanier(req,res);
+     }
+
 }
