@@ -75,6 +75,7 @@ export class ClientManager {
            */
 
           public async login(req, res) {
+            console.log(req.body)
             if (req.body.Email) {
                 const clientByEmail = await clientModel.findOne({Email: req.body.Email});
                 if (clientByEmail != undefined) {
@@ -83,14 +84,8 @@ export class ClientManager {
                       if (err) {
                         res.status(500).send({ message: "Une erreur est survenue, veuillez vérifier que tous les champs sont correctement remplis. Si l'erreur persiste, veuillez contacter votre administrateur" });
                       }else if (same) {
-                        clientByEmail.save((err, user) => {
-                          if (err) {
-                            res.status(500).send("Une erreur est survenue lors de la connexion");
-                          } else {
                             const token = jwt.sign(clientByEmail._id.toJSON(), process.env.SECRET_TOKEN_ACCESS);
-                            res.status(200).send({ accessToken: token });
-                          }
-                        })
+                            res.status(200).send({ accessToken: token }); 
                       } else {
                         res.status(400).send({ message: "La comparaison de mot de passe a échoué, êtes vous sûr d'avoir rentré le bon ?" });
                       }
