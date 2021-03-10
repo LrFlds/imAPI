@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { StoreManager } from "../Domain/Domain_services/Managers/storeManager";
+import { StoreManager } from "../domain/domain_services/managers/storeManager";
 
 export class StoreController {
 
