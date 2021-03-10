@@ -83,12 +83,44 @@ export class StoreManager {
                                 }
                             })
                         }
-                }
-                
-             }
+
+                            if(req.body.Name != null && req.body.NewName != null && req.body.Name != req.body.NewName && req.body.NewName != ""){
+                                store.updateOne({ Name: (req.body.NewName )},{new:true},(err,newStore) => {
+                                    if (err) {
+                                        res.status(400).send({message:"le nouveau nom est incorrect"})
+                                    }else{
+                                        res.status(200).send({message:"la mise à jour a bien été effectuée"})
+                                    }
+                                })
+                            }
+                            
+                            if(req.body.Name != null && req.body.NewPassword != null && req.body.Password != req.body.NewPassword && req.body.NewPassword != ""){
+                                await bcrypt.compare(req.body.Password, store.Password, (err, match) => {
+                                    if(err){
+                                        res.send('Mot depasse éronné')
+                                    }else{
+
+                                        store.updateOne({ Name: (req.body.NewPassword )},{new:true},(err,newStore) => {
+                                            if (err) {
+                                                res.status(400).send({message:"le nouveau nom est incorrect"})
+                                            }else{
+                                                res.status(200).send({message:"la mise à jour a bien été effectuée"})
+                                            }
+                                        })
+                                }
+                                    }
+
+                            
+                         }
+
+                 }
+    }  
+}             
+             
 
 
-}
+
+
 
 
 
