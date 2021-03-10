@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction  } from "express";
 import { ClientManager } from "../../Domain/Domain_services/Managers/clientManager";
 
 export class ClientController {
@@ -23,8 +23,13 @@ export class ClientController {
         clientManager.deleteClient(req,res);
     }
 
-    public updateClient(req: Request, res: Response) {
+    public updateClientPassword(req: Request, res: Response) {
         const clientManager : ClientManager = new ClientManager();
-        clientManager.updateClient(req,res);
+        clientManager.updateClientPassword(req,res);
+    }
+
+    public verifToken(req: Request, res: Response, next: NextFunction) {
+        const clientManager : ClientManager = new ClientManager();
+        clientManager.verifToken(req,res, next);
     }
 }
