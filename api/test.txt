@@ -34,3 +34,14 @@ localhost:3001/client/update/603dfc015dcd6f1afc135af6 (id de mon compte )
 
 
 restclient 
+
+
+
+create Store : POST : localhost:3001/store/create 
+{
+    
+    "Name": "Je suis un test Store",
+    "Email": "store@gmail.com",
+    "Password": "Jesuisuntest1212",
+    "Panier": ["604743d29480dc293067dec4"]
+}

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PanierManager } from "../../Domain/Domain_services/Managers/panierManager";
+import { PanierManager } from "../domain/domain_services/managers/panierManager";
 
 export class PanierController {
 
@@ -17,5 +17,9 @@ export class PanierController {
         const panierManager : PanierManager = new PanierManager();
         panierManager.deletePanier(req,res);
     }
+     public updatePanier(req:Request,res:Response) {
+         const panierManager:PanierManager = new PanierManager();
+         panierManager.updatePanier(req,res);
+     }
 
 }

@@ -142,8 +142,7 @@ export class ClientManager {
 
           public async updateClientPassword(req, res){
             const client = await clientModel.findById(req.user._id)
-            console.log("je vais niquer ta mère")
-            if (req.body.NewPass != null && req.body.NewPass != undefined) {
+            if (req.body.NewPass != null && req.body.NewPass != undefined && req.body.NewPass.trim().length != 0) {
                 if (req.body.Password != null && req.body.NewPass != req.body.Password) {
                     await bcrypt.compare(req.body.Password, client.Password, async (err, same) => {
                       if (err) {

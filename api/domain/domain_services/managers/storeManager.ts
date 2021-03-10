@@ -18,32 +18,36 @@ export class StoreManager {
     public async createStore(req,res) {
         const storeExist = await storeModel.findOne({Email:req.body.Email})
             if (storeExist != null) {
-                res.status(400).send({ message: 'Magasin déjà enregistré avec cette adresse mail' })
+                res.status(400).send({ message: 'Utilisateur déjà enregistré avec cet Email' })
             } else {
                 const newStore = new storeModel({
                     Name: req.body.Name,
                     Email: req.body.Email,
-                    Password: req.body.Password,
                     Panier: req.body.Panier
-                    
                 })
-                newStore.save((err,newPro)=>{
-                    if(err){
+                CryptPassword.hashPassword(req.body.Password, 10, (err, hash) => {
+                    if (err) {
                         res.send(err)
-                    }else{
-                        res.send("Magasin enregistré" + newStore)
+                    } else {
+                        newStore.Password = hash;
+                        newStore.save((err, user) => {
+                            if (err) {
+                                res.send(err)
+                            } else {
+                                res.sendStatus(201)
+                            }
+                        })
                     }
                 })
-                    
-                }
                
             }
+        }
         
 
             public  deleteStore(req,res){
                 const Stores = storeModel.findOne({ Email: req.body.Email })
                 if (Stores == null) {
-                    res.status(400).send({ message: 'client déjà supprimé' })
+                    res.status(400).send({ message: 'Magasin déjà supprimé' })
                 }else {
                    
                     Stores.remove((err,Stores)=>{
