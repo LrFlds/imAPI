@@ -5,6 +5,9 @@ import{ RouteStore} from "../lib/routes/storeRoute"
 
 
 
+
+
+
 class App {
     public app: express.Application;
     public routeClt: RouteClient = new RouteClient();
@@ -22,6 +25,15 @@ class App {
     }
     private config(): void{
         this.app.use(express.json());
+        this.app.use((req, res, next)=>{
+            res.setHeader("Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept")
+            res.setHeader("Access-Control-Allow-Methods",
+            "GET, POST, PATCH, DELETE, OPTIONS")
+            next()
+        })
+    
+
 
     }
 }

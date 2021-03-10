@@ -21,6 +21,7 @@
     "@types/express": "^4.17.11",
     "@types/node": "^14.14.31",
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "development": "0.0.6",
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
