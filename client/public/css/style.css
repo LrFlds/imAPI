@@ -1014,5 +1014,22 @@ a {
         right: 100px;
         bottom: 150px;     
     }
+
+    /* notification part ////////// */
+
+    .box-notification {
+        position: relative;
+        width: 70%;
+        height: 95%;
+        margin-top: 20px;
+        border-radius: 5px;
+        opacity: 85%;
+        background-color: rgb(212, 212, 212);
+        text-align: center;
+    }
+
+    .box-notification h3{
+        padding: 25px;
+    }
     
 }
