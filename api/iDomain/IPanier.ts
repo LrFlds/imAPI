@@ -6,6 +6,6 @@ export interface IPanier extends Document {
     Reference: String,
     Products: Array<String>,
     Dispo: Boolean, 
-    Price:  Number, 
+    Price:  number, 
     Quantity: number, 
 }
