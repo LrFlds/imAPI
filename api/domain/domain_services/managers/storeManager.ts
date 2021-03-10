@@ -41,14 +41,14 @@ export class StoreManager {
             public  deleteStore(req,res){
                 const Stores = storeModel.findOne({ Email: req.body.Email })
                 if (Stores == null) {
-                    res.status(400).send({ message: "Le magasin n'existe pas" })
+                    res.status(400).send({ message: 'Magasin déjà supprimé' })
                 }else {
                    
                     Stores.remove((err,Stores)=>{
                         if(err){
                             res.send(err)
                         }else{
-                            res.status(200).send("Magasin supprimé")
+                            res.sendStatus(200)
                         }
                     })
                 }
