@@ -1,4 +1,4 @@
-import { PanierController } from "../controllers/panierController";
+import { PanierController } from "../../controllers/panierController";
 
 
 
