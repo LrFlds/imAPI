@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction  } from "express";
-import { ClientManager } from "../Domain/Domain_services/Managers/clientManager";
+import { ClientManager } from "../domain/domain_services/managers/clientManager";
 
 export class ClientController {
 
