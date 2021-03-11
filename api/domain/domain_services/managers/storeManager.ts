@@ -46,15 +46,15 @@ export class StoreManager {
         const Stores = await storeModel.find({})
         const viewStores = []
         for (let store of Stores) {
-          const viewStore = {
-            Name: store.Name,
-            Panier: store.Panier,
-            Id: store._id
-          }
-          viewStores.push(viewStore)
+            const viewStore = {
+                Name: store.Name,
+                Panier: store.Panier,
+                Id: store._id
+            }
+            viewStores.push(viewStore)
         }
         res.status(200).send(viewStores)
-      }
+    }
 
 
     public deleteStore(req, res) {
@@ -74,24 +74,36 @@ export class StoreManager {
     }
 
     public async updateStore(req, res) {
+        const reponsePositive = []
+        const reponseNegative = []
+
         if (req.body.Email != undefined && req.body.Email != null) {
             const store = await storeModel.findOne({ Email: req.body.Email })
             if (store == null) {
-                res.status(400).send({ message: "le magasin n'existe pas" })
+                reponseNegative.push("le magasin n' existe pas")
+
             } else if (req.body.NewEmail != undefined && req.body.NewEmail != null && req.body.NewEmail != "") {
                 await bcrypt.compare(req.body.Password, store.Password, (err, match) => {
                     if (err) {
-                        res.status(400).send({ message: "le mot de passe ne correspond pas au mot de passe de l email du magasin" })
+
+                        reponseNegative.push("la comparaison a échoué")
+
                     } else if (match == true) {
+
                         store.updateOne({ Email: (req.body.NewMail) }, { new: true }, (err, newStore) => {
                             if (err) {
-                                res.status(400).send({ message: " " })
+
+                                reponseNegative.push("la mise à jour à echouée")
+
                             } else {
-                                res.status(200).send({ message: "la mise à jour a bien été effectuée" })
+
+                                reponsePositive.push("la mise à jour a bien été effectuée")
+
                             }
                         })
                     } else {
-                        res.status(400).send({ message: "la mise à jour ne peut etre effectué car les mots de passe ne correspondent pas" })
+                        reponseNegative.push("la mise à jour ne peut etre effectué car les mots de passe ne correspondent pas")
+
                     }
                 })
             }
@@ -99,35 +111,29 @@ export class StoreManager {
             if (req.body.Name != null && req.body.NewName != null && req.body.Name != req.body.NewName && req.body.NewName != "") {
                 store.updateOne({ Name: (req.body.NewName) }, { new: true }, (err, newStore) => {
                     if (err) {
-                        res.status(400).send({ message: "le nouveau nom est incorrect" })
+                        reponseNegative.push("la mise à jour a échoué")
+
                     } else {
-                        res.status(200).send({ message: "la mise à jour a bien été effectuée" })
+                        reponsePositive.push("la mise à jour a bien été effectuée")
+
                     }
                 })
+
+            } else {
+                reponseNegative.push("la mise à jour a échoué")
+
+            }
+        } else {
+            reponseNegative.push("un email est requis")
+        }
+            if (reponsePositive.length != 0 && reponseNegative.length != 0) {
+                res.status(400).send("il ya eut des erreurs lors de la mise à jour")
+            } else if (reponseNegative.length != 0 && reponsePositive.length == 0) {
+                res.status(400).send("la mise à jour de tous les champs à échoué")
+            } else if (reponsePositive.length != 0 && reponseNegative.length == 0) {
+                res.status(200).send("la mise à jour s' est correctement déroulée")
             }
 
-            if (req.body.Name != null && req.body.NewPassword != null && req.body.Password != req.body.NewPassword && req.body.NewPassword != "") {
-                await bcrypt.compare(req.body.Password, store.Password, (err, match) => {
-                    if (err) {
-                        res.send('Mot depasse éronné')
-                    } else {
-
-                        store.updateOne({ Name: (req.body.NewPassword) }, { new: true }, (err, newStore) => {
-                            if (err) {
-                                res.status(400).send({ message: "le nouveau nom est incorrect" })
-                            } else {
-                                res.status(200).send({ message: "la mise à jour a bien été effectuée" })
-                            }
-                        })
-                    }
-                })
-            }
         }
 
-
-
     }
-
-}
-
-}
