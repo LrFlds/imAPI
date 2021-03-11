@@ -2,7 +2,7 @@ import * as express from "express";
 import { RouteClient } from "../lib/routes/clientRoute"
 import{ RoutePanier} from "../lib/routes/panierRoute"
 import{ RouteStore} from "../lib/routes/storeRoute"
-import * as cors from"cors"
+import * as cors from "cors"
 
 
 
