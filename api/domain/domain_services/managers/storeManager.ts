@@ -129,7 +129,7 @@ export class StoreManager {
             if (reponsePositive.length != 0 && reponseNegative.length != 0) {
                 res.status(400).send("il ya eut des erreurs lors de la mise à jour")
             } else if (reponseNegative.length != 0 && reponsePositive.length == 0) {
-                res.status(400).send("la mise à jour de tous les champs à échoué")
+                res.status(400).send("la mise à jour de tous les champs a échoué")
             } else if (reponsePositive.length != 0 && reponseNegative.length == 0) {
                 res.status(200).send("la mise à jour s' est correctement déroulée")
             }
