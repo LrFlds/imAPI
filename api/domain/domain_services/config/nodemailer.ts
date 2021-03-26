@@ -9,12 +9,12 @@ export class SendMail {
       private _transporter: nodemailer.Transporter; 
       constructor() { 
         this._transporter = nodemailer.createTransport( 
-          `smtps://<username>%40gmail.com:<password>@smtp.gmail.com` 
+          `smtps://gladys%40gmail.com:gladys@smtp.gmail.com` 
         ); 
       } 
       sendMail(to: string, subject: string, content: string) { 
         let options = { 
-          from: 'from_test@gmail.com', 
+          from: 'gladys.akela.pro@gmail.com', 
           to: to, 
           subject: subject, 
           text: content 

@@ -1,9 +1,3 @@
-/* 
- *Subject : Connect to BDD
- *Author : Laura Fialdès
- Date : 26/02/2021
-*/
-
 import * as dotenv from "dotenv";
 import * as dotenvExpand  from "dotenv-expand";
 import * as mongoose from "mongoose";

@@ -1,16 +1,16 @@
 creation client : POST : localhost:3000/client/create 
 {
-    "Name": "Laura",
-    "FirstName": "Fialdes",
-    "Email": "laura.fialdes@gmail.com",
-    "Password":"Laura080690!" ,
+    "Name": "Jacques",
+    "FirstName": "Mengha",
+    "Email": "jacquesmengha@gmail.com",
+    "Password":"jacques2018" ,
     "Panier": []
 }
 
 login : POST: localhost:3000/client/login
 {
-    "Email": "laura.fialdes@gmail.com",
-    "Password":"Laura080690!" 
+    "Email": "jacquesmengha@mail.com",
+    "Password":"jacques2018" 
 }
 
 getAllClient : GET : localhost:3000/client/getAll
